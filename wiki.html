@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>For Brands — NEXUS Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #050508;
+    --purple-deep: #1a0a2e;
+    --purple-mid: #3d1a6e;
+    --purple-vivid: #7c3aed;
+    --purple-glow: #a855f7;
+    --pink-glow: #ec4899;
+    --blue-glow: #6366f1;
+    --white: #ffffff;
+    --white-60: rgba(255,255,255,0.6);
+    --white-30: rgba(255,255,255,0.3);
+    --white-10: rgba(255,255,255,0.1);
+    --white-05: rgba(255,255,255,0.05);
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 56px;
+    transition: background 0.4s, backdrop-filter 0.4s, padding 0.3s;
+  }
+  nav.scrolled {
+    background: rgba(5,5,8,0.85);
+    backdrop-filter: blur(20px);
+    padding: 16px 56px;
+    border-bottom: 1px solid var(--white-10);
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-size: 22px; font-weight: 800; letter-spacing: -0.5px;
+    color: var(--white); text-decoration: none; cursor: none;
+  }
+  .logo span { color: var(--purple-glow); }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 36px; list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--font-body); font-size: 13px; font-weight: 400;
+    letter-spacing: 0.05em; color: var(--white-60); text-decoration: none;
+    text-transform: uppercase; transition: color 0.2s; cursor: none;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--white); }
+
+  .nav-cta {
+    font-family: var(--font-body); font-size: 13px; font-weight: 500;
+    letter-spacing: 0.04em; color: var(--white); text-decoration: none;
+    background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(168,85,247,0.5);
+    padding: 10px 22px; border-radius: 4px;
+    transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
+    white-space: nowrap;
+  }
+  .nav-cta:hover {
+    background: rgba(168,85,247,0.25);
+    border-color: var(--purple-glow);
+    box-shadow: 0 0 24px rgba(168,85,247,0.25);
+  }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    height: 100vh; min-height: 700px;
+    display: flex; flex-direction: column;
+    align-items: flex-start; justify-content: center;
+    overflow: hidden;
+    padding: 0 56px;
+  }
+
+  #hero-canvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+  }
+
+  #hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 200px; opacity: 0.4;
+    pointer-events: none; z-index: 1;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 720px;
+  }
+
+  .hero-tag {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--purple-glow);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+  }
+  .hero-tag::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--purple-glow); border-radius: 50%;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6.5vw, 84px);
+    font-weight: 700; line-height: 1.0; letter-spacing: -0.03em;
+    margin-bottom: 28px;
+    opacity: 0; animation: fadeUp 0.9s 0.4s forwards;
+  }
+  .hero-title em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--purple-glow), var(--pink-glow), var(--blue-glow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 17px; font-weight: 300; line-height: 1.75;
+    color: var(--white-60); max-width: 520px;
+    margin-bottom: 48px;
+    opacity: 0; animation: fadeUp 0.9s 0.6s forwards;
+  }
+
+  .hero-actions {
+    opacity: 0; animation: fadeUp 0.9s 0.8s forwards;
+    display: flex; align-items: center; gap: 20px;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-body); font-size: 14px; font-weight: 500;
+    letter-spacing: 0.03em; color: var(--bg);
+    background: var(--white); padding: 16px 36px; border-radius: 4px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(255,255,255,0.15);
+  }
+  .btn-primary svg { width: 16px; height: 16px; }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-body); font-size: 13px; font-weight: 400;
+    letter-spacing: 0.04em; color: var(--white-60); text-decoration: none;
+    transition: color 0.2s; cursor: none;
+  }
+  .btn-ghost:hover { color: var(--white); }
+  .btn-ghost svg { width: 14px; height: 14px; }
+
+  /* hero stats bar */
+  .hero-stats {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    z-index: 2;
+    border-top: 1px solid var(--white-10);
+    display: flex;
+    opacity: 0; animation: fadeIn 1s 1.2s forwards;
+  }
+  .stat-item {
+    flex: 1; padding: 24px 40px;
+    border-right: 1px solid var(--white-10);
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 28px; font-weight: 800; letter-spacing: -0.03em;
+    color: var(--white);
+  }
+  .stat-num span { color: var(--purple-glow); }
+  .stat-label {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--white-30);
+  }
+
+  /* ── SECTION BASE ── */
+  section { position: relative; overflow: hidden; }
+  .section-inner {
+    max-width: 1100px; margin: 0 auto; padding: 0 56px;
+  }
+
+  /* ── PROBLEM SECTION ── */
+  #problem {
+    padding: 120px 0;
+    border-bottom: 1px solid var(--white-10);
+  }
+
+  .problem-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+
+  .problem-left {}
+
+  .section-eyebrow {
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--purple-glow); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-eyebrow::before {
+    content: ''; width: 24px; height: 1px;
+    background: var(--purple-glow);
+  }
+
+  .problem-title {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 3.8vw, 52px);
+    font-weight: 800; letter-spacing: -0.03em; line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
+  .problem-intro {
+    font-size: 15px; font-weight: 300; line-height: 1.75;
+    color: var(--white-60);
+  }
+
+  .problem-right {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+
+  .problem-item {
+    display: flex; align-items: flex-start; gap: 20px;
+    padding: 28px 32px;
+    background: var(--white-05);
+    border: 1px solid var(--white-10);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s, border-color 0.3s, transform 0.3s;
+  }
+  .problem-item::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--purple-glow), var(--pink-glow));
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .problem-item:hover {
+    background: rgba(124,58,237,0.07);
+    border-color: rgba(168,85,247,0.25);
+    transform: translateX(4px);
+  }
+  .problem-item:hover::before { opacity: 1; }
+
+  .problem-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    border: 1px solid rgba(168,85,247,0.2);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--purple-glow);
+  }
+  .problem-icon svg { width: 16px; height: 16px; }
+
+  .problem-text {}
+  .problem-text strong {
+    font-family: var(--font-display);
+    font-size: 15px; font-weight: 700;
+    display: block; margin-bottom: 4px;
+  }
+  .problem-text p {
+    font-size: 13px; font-weight: 300;
+    color: var(--white-60); line-height: 1.6;
+  }
+
+  /* ── APPROACH ── */
+  #approach {
+    padding: 120px 0;
+    border-bottom: 1px solid var(--white-10);
+  }
+
+  .approach-inner {
+    position: relative;
+  }
+
+  .approach-bg {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse, rgba(124,58,237,0.1), transparent 70%);
+    pointer-events: none;
+  }
+
+  .approach-eyebrow {
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--purple-glow); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .approach-eyebrow::before {
+    content: ''; width: 24px; height: 1px; background: var(--purple-glow);
+  }
+
+  .approach-content {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end;
+  }
+
+  .approach-title {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 3.8vw, 52px);
+    font-weight: 800; letter-spacing: -0.03em; line-height: 1.1;
+  }
+  .approach-title em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--purple-glow), var(--pink-glow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  .approach-body {
+    font-size: 18px; font-weight: 300; line-height: 1.75;
+    color: var(--white-60);
+    border-left: 2px solid rgba(168,85,247,0.3);
+    padding-left: 24px;
+  }
+  .approach-body strong { color: var(--white); font-weight: 500; }
+
+  /* pillars strip */
+  .approach-pillars {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px; margin-top: 64px;
+  }
+  .pillar {
+    padding: 32px 28px;
+    background: var(--white-05);
+    border: 1px solid var(--white-10);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .pillar-label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--purple-glow);
+  }
+  .pillar-text {
+    font-family: var(--font-display);
+    font-size: 17px; font-weight: 700; letter-spacing: -0.01em;
+  }
+
+  /* ── WHAT WE HANDLE ── */
+  #handles {
+    padding: 120px 0;
+    border-bottom: 1px solid var(--white-10);
+  }
+
+  .handles-header {
+    margin-bottom: 64px;
+  }
+
+  .handles-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 800; letter-spacing: -0.03em; line-height: 1.1;
+    margin-top: 16px;
+  }
+
+  .handles-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .handle-card {
+    position: relative;
+    padding: 52px 40px;
+    background: var(--white-05);
+    border: 1px solid var(--white-10);
+    overflow: hidden;
+    transition: background 0.35s, border-color 0.35s;
+  }
+  .handle-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--purple-glow), var(--pink-glow));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .handle-card:hover { background: rgba(124,58,237,0.07); border-color: rgba(168,85,247,0.25); }
+  .handle-card:hover::after { transform: scaleX(1); }
+
+  .handle-num {
+    font-family: var(--font-display);
+    font-size: 11px; letter-spacing: 0.15em;
+    color: var(--purple-glow); margin-bottom: 36px;
+  }
+
+  .handle-icon {
+    width: 44px; height: 44px;
+    border: 1px solid rgba(168,85,247,0.2);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--purple-glow);
+    margin-bottom: 24px;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .handle-card:hover .handle-icon {
+    background: rgba(168,85,247,0.1);
+    border-color: rgba(168,85,247,0.5);
+  }
+  .handle-icon svg { width: 20px; height: 20px; }
+
+  .handle-title {
+    font-family: var(--font-display);
+    font-size: 22px; font-weight: 700; letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+  .handle-desc {
+    font-size: 14px; font-weight: 300; line-height: 1.7;
+    color: var(--white-60);
+  }
+
+  /* ── OUTCOMES ── */
+  #outcomes {
+    padding: 120px 0;
+    border-bottom: 1px solid var(--white-10);
+  }
+
+  .outcomes-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+  }
+
+  .outcomes-left {}
+  .outcomes-title {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 3.8vw, 52px);
+    font-weight: 800; letter-spacing: -0.03em; line-height: 1.1;
+    margin-top: 16px; margin-bottom: 24px;
+  }
+  .outcomes-title em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--purple-glow), var(--pink-glow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .outcomes-sub {
+    font-size: 15px; font-weight: 300; line-height: 1.75; color: var(--white-60);
+  }
+
+  .outcomes-right {
+    display: flex; flex-direction: column; gap: 0;
+    border: 1px solid var(--white-10);
+  }
+
+  .outcome-row {
+    display: flex; align-items: center; gap: 20px;
+    padding: 28px 32px;
+    border-bottom: 1px solid var(--white-10);
+    position: relative; overflow: hidden;
+    transition: background 0.3s;
+  }
+  .outcome-row:last-child { border-bottom: none; }
+  .outcome-row:hover { background: rgba(124,58,237,0.07); }
+
+  .outcome-check {
+    width: 28px; height: 28px; flex-shrink: 0;
+    border: 1px solid rgba(168,85,247,0.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--purple-glow); transition: background 0.3s, border-color 0.3s;
+  }
+  .outcome-row:hover .outcome-check {
+    background: rgba(168,85,247,0.15);
+    border-color: var(--purple-glow);
+  }
+  .outcome-check svg { width: 12px; height: 12px; }
+
+  .outcome-text {
+    flex: 1;
+  }
+  .outcome-text strong {
+    font-family: var(--font-display);
+    font-size: 16px; font-weight: 700;
+    display: block; margin-bottom: 2px;
+  }
+  .outcome-text p {
+    font-size: 13px; font-weight: 300; color: var(--white-60);
+  }
+
+  .outcome-idx {
+    font-family: var(--font-display);
+    font-size: 32px; font-weight: 800;
+    color: rgba(168,85,247,0.1);
+    letter-spacing: -0.04em;
+  }
+
+  /* ── FINAL CTA ── */
+  #final-cta {
+    padding: 160px 56px;
+    text-align: center;
+    position: relative;
+  }
+
+  .cta-glow {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px; height: 350px;
+    background: radial-gradient(ellipse, rgba(124,58,237,0.18), transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-eyebrow {
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--purple-glow);
+    margin-bottom: 24px;
+    position: relative; z-index: 1;
+  }
+
+  .cta-line {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 4.5vw, 60px);
+    font-weight: 800; letter-spacing: -0.03em;
+    line-height: 1.1; margin-bottom: 48px;
+    position: relative; z-index: 1;
+  }
+  .cta-line em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--purple-glow), var(--pink-glow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  .cta-actions {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+  }
+
+  .cta-note {
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--white-30);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 32px 56px;
+    border-top: 1px solid var(--white-10);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 16px; font-weight: 800;
+    color: var(--white-30); text-decoration: none; cursor: none;
+  }
+  .footer-logo span { color: var(--purple-glow); }
+  footer p { font-size: 12px; color: var(--white-30); letter-spacing: 0.05em; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav.scrolled { padding: 14px 24px; }
+    .nav-links { display: none; }
+    #hero { padding: 0 24px; }
+    .section-inner { padding: 0 24px; }
+    .problem-grid, .approach-content, .outcomes-grid { grid-template-columns: 1fr; gap: 48px; }
+    .handles-grid, .approach-pillars { grid-template-columns: 1fr; }
+    .hero-stats { display: none; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+    #final-cta { padding: 80px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="logo">NEX<span>US</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="#" class="active">For Brands</a></li>
+    <li><a href="index.html#process">For Creators</a></li>
+    <li><a href="index.html#process">How It Works</a></li>
+    <li><a href="index.html#faq">About</a></li>
+  </ul>
+  <a href="#final-cta" class="nav-cta">Apply to Work With Us ↗</a>
+</nav>
+
+<!-- ── SECTION 1: HERO ── -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+
+  <div class="hero-content">
+    <div class="hero-tag">Brand · Creator Partnership Agency</div>
+    <h1 class="hero-title">
+      Where brands and<br/>creators craft <em>meaningful</em> collaborations.
+    </h1>
+    <p class="hero-sub">
+      We connect brands with creators through structured,<br/>performance-driven collaborations.
+    </p>
+    <div class="hero-actions">
+      <a href="#final-cta" class="btn-primary">
+        Apply to Work With Us
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+      <a href="#problem" class="btn-ghost">
+        See how it works
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2v10M2 7l5 5 5-5"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">100<span>%</span></div>
+      <div class="stat-label">Structured campaigns</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">Zero</div>
+      <div class="stat-label">Random placements</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">Full</div>
+      <div class="stat-label">Execution managed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">Clear</div>
+      <div class="stat-label">Reporting every time</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 2: THE PROBLEM ── -->
+<section id="problem">
+  <div class="section-inner">
+    <div class="problem-grid">
+
+      <div class="problem-left reveal">
+        <div class="section-eyebrow">The Problem</div>
+        <h2 class="problem-title">Why most influencer campaigns fail.</h2>
+        <p class="problem-intro">The influencer space is full of noise — random partnerships, inflated metrics, and campaigns that look active but don't drive results. Most brands have been here before.</p>
+      </div>
+
+      <div class="problem-right">
+        <div class="problem-item reveal reveal-delay-1">
+          <div class="problem-icon">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
+          </div>
+          <div class="problem-text">
+            <strong>Poor creator selection</strong>
+            <p>Choosing creators by follower count alone — ignoring audience quality, niche fit, and content style.</p>
+          </div>
+        </div>
+        <div class="problem-item reveal reveal-delay-2">
+          <div class="problem-icon">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8h3l2-5 4 10 2-5h3"/></svg>
+          </div>
+          <div class="problem-text">
+            <strong>Misaligned audiences</strong>
+            <p>Content reaches the wrong people. High impressions, low impact. The audience doesn't convert.</p>
+          </div>
+        </div>
+        <div class="problem-item reveal reveal-delay-3">
+          <div class="problem-icon">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="1"/><path d="M5 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/></svg>
+          </div>
+          <div class="problem-text">
+            <strong>Lack of structured execution</strong>
+            <p>No clear brief, no defined deliverables, no timeline. The campaign drifts and underdelivers.</p>
+          </div>
+        </div>
+        <div class="problem-item reveal reveal-delay-4">
+          <div class="problem-icon">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12l4-4 3 3 5-6"/></svg>
+          </div>
+          <div class="problem-text">
+            <strong>No measurable outcomes</strong>
+            <p>Campaigns close with vanity metrics and no actionable data. Nothing to optimize from.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 3: OUR APPROACH ── -->
+<section id="approach">
+  <div class="section-inner">
+    <div class="approach-inner">
+      <div class="approach-bg"></div>
+
+      <div class="approach-eyebrow reveal">Our Approach</div>
+
+      <div class="approach-content reveal">
+        <h2 class="approach-title">A more structured way to <em>collaborate.</em></h2>
+        <p class="approach-body">
+          We focus on <strong>alignment over reach</strong> — matching brands with creators based on audience, content style, and campaign objectives.<br/><br/>
+          Every collaboration is intentional. Every partnership is built to perform.
+        </p>
+      </div>
+
+      <div class="approach-pillars">
+        <div class="pillar reveal reveal-delay-1" style="background: rgba(124,58,237,0.08); border-color: rgba(168,85,247,0.2);">
+          <div class="pillar-label">Our way</div>
+          <div class="pillar-text">Alignment-first matching</div>
+        </div>
+        <div class="pillar reveal reveal-delay-2" style="background: rgba(124,58,237,0.08); border-color: rgba(168,85,247,0.2);">
+          <div class="pillar-label">Our way</div>
+          <div class="pillar-text">Clear frameworks & timelines</div>
+        </div>
+        <div class="pillar reveal reveal-delay-3" style="background: rgba(124,58,237,0.08); border-color: rgba(168,85,247,0.2);">
+          <div class="pillar-label">Our way</div>
+          <div class="pillar-text">Transparent reporting</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 4: WHAT WE HANDLE ── -->
+<section id="handles">
+  <div class="section-inner">
+    <div class="handles-header reveal">
+      <div class="section-eyebrow">What We Handle</div>
+      <h2 class="handles-title">Everything from discovery<br/>to delivery.</h2>
+    </div>
+    <div class="handles-grid">
+      <div class="handle-card reveal reveal-delay-1">
+        <div class="handle-num">01 / 03</div>
+        <div class="handle-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="5"/><path d="M12 12l4 4"/><path d="M8 5v6M5 8h6"/></svg>
+        </div>
+        <h3 class="handle-title">Creator Discovery & Matching</h3>
+        <p class="handle-desc">We identify and vet creators based on audience alignment, content quality, and campaign fit — not just follower count. You get partners that actually make sense for your brand.</p>
+      </div>
+      <div class="handle-card reveal reveal-delay-2">
+        <div class="handle-num">02 / 03</div>
+        <div class="handle-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M7 7h6M7 10h6M7 13h4"/></svg>
+        </div>
+        <h3 class="handle-title">Campaign Structuring</h3>
+        <p class="handle-desc">Every collaboration is built on a clear framework — defined objectives, deliverables, timelines, and success metrics. Both sides know exactly what's expected before anything begins.</p>
+      </div>
+      <div class="handle-card reveal reveal-delay-3">
+        <div class="handle-num">03 / 03</div>
+        <div class="handle-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10h12M10 4l6 6-6 6"/></svg>
+        </div>
+        <h3 class="handle-title">Execution & Coordination</h3>
+        <p class="handle-desc">We manage the full collaboration cycle from briefing through final delivery. Seamless coordination so your team can stay focused on what matters most.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 5: OUTCOMES ── -->
+<section id="outcomes">
+  <div class="section-inner">
+    <div class="outcomes-grid">
+
+      <div class="outcomes-left reveal">
+        <div class="section-eyebrow">Outcomes</div>
+        <h2 class="outcomes-title">What this<br/>leads <em>to.</em></h2>
+        <p class="outcomes-sub">When the process is structured, the results follow. Here's what brands working with Nexus consistently see.</p>
+      </div>
+
+      <div class="outcomes-right reveal reveal-delay-2">
+        <div class="outcome-row">
+          <div class="outcome-check">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg>
+          </div>
+          <div class="outcome-text">
+            <strong>Better audience targeting</strong>
+            <p>Content reaching people who are genuinely likely to care about your product.</p>
+          </div>
+          <div class="outcome-idx">01</div>
+        </div>
+        <div class="outcome-row">
+          <div class="outcome-check">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg>
+          </div>
+          <div class="outcome-text">
+            <strong>Higher engagement</strong>
+            <p>Authentic creator partnerships drive stronger interaction than conventional ads.</p>
+          </div>
+          <div class="outcome-idx">02</div>
+        </div>
+        <div class="outcome-row">
+          <div class="outcome-check">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg>
+          </div>
+          <div class="outcome-text">
+            <strong>Consistent campaign execution</strong>
+            <p>Structured delivery means every campaign runs on time, on brief, every time.</p>
+          </div>
+          <div class="outcome-idx">03</div>
+        </div>
+        <div class="outcome-row">
+          <div class="outcome-check">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg>
+          </div>
+          <div class="outcome-text">
+            <strong>Measurable performance</strong>
+            <p>Clear reporting on what worked, what didn't, and what to do better next time.</p>
+          </div>
+          <div class="outcome-idx">04</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 6: FINAL CTA ── -->
+<section id="final-cta">
+  <div class="cta-glow"></div>
+  <p class="cta-eyebrow reveal">↗ Work With Nexus</p>
+  <p class="cta-line reveal">
+    Looking for meaningful<br/><em>creator partnerships?</em>
+  </p>
+  <div class="cta-actions reveal">
+    <a href="#" class="btn-primary">
+      Apply to Work With Us
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+    </a>
+    <span class="cta-note">For brands — no commitment required</span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="index.html" class="footer-logo">NEX<span>US</span></a>
+  <p>© 2025 Nexus Agency. All rights reserved.</p>
+</footer>
+
+<script>
+
+// ── Nav scroll ──
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── Hero Canvas ──
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, t = 0;
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function drawBase() {
+    const g = ctx.createRadialGradient(W*0.75, H*0.3, 0, W*0.6, H*0.5, W*0.9);
+    g.addColorStop(0, '#2a0a50');
+    g.addColorStop(0.3, '#1a0a2e');
+    g.addColorStop(0.7, '#0d0718');
+    g.addColorStop(1, '#050508');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  function ribbon(cfg) {
+    const { ox, oy, cx1, cy1, cx2, cy2, ex, ey, color, width, alpha } = cfg;
+    ctx.beginPath();
+    ctx.moveTo(ox, oy);
+    ctx.bezierCurveTo(cx1, cy1, cx2, cy2, ex, ey);
+    ctx.lineWidth = width;
+    ctx.strokeStyle = color;
+    ctx.globalAlpha = alpha;
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    drawBase();
+    t += 0.004;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+
+    const configs = [
+      { ox:W*(0.72+0.04*Math.sin(t*0.8)), oy:-H*0.05, cx1:W*0.88+40*Math.cos(t), cy1:H*0.25, cx2:W*0.65+30*Math.sin(t*1.2), cy2:H*0.65, ex:W*1.05, ey:H*1.05, color:'rgba(120,40,220,0.7)', width:220+40*Math.sin(t), alpha:0.32 },
+      { ox:W*(0.78+0.03*Math.cos(t)), oy:-H*0.08, cx1:W*0.9+20*Math.sin(t*1.3), cy1:H*0.2, cx2:W*0.7+25*Math.cos(t), cy2:H*0.6, ex:W*1.08, ey:H*1.1, color:'rgba(168,85,247,0.6)', width:120+30*Math.cos(t*0.9), alpha:0.38 },
+      { ox:W*(0.8+0.05*Math.sin(t*1.1)), oy:-H*0.02, cx1:W*0.85+15*Math.cos(t*0.7), cy1:H*0.3, cx2:W*0.62+20*Math.sin(t), cy2:H*0.72, ex:W*1.02, ey:H*1.08, color:'rgba(236,72,153,0.5)', width:60+20*Math.sin(t*1.1), alpha:0.28 },
+      { ox:W*(0.74+0.03*Math.cos(t*0.6)), oy:-H*0.03, cx1:W*0.91+10*Math.sin(t*1.5), cy1:H*0.22, cx2:W*0.68+12*Math.cos(t*1.1), cy2:H*0.68, ex:W*1.03, ey:H*1.05, color:'rgba(200,140,255,0.9)', width:8+4*Math.sin(t*2), alpha:0.5 },
+    ];
+
+    configs.forEach(c => ribbon(c));
+
+    const spots = [
+      { x: W*0.8+30*Math.sin(t), y: H*0.28+20*Math.cos(t*0.7), r: 200, c1:'rgba(124,58,237,0.2)', c2:'transparent' },
+      { x: W*0.9+20*Math.cos(t*0.8), y: H*0.55+15*Math.sin(t), r: 250, c1:'rgba(168,85,247,0.12)', c2:'transparent' },
+    ];
+    spots.forEach(s => {
+      const grd = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r);
+      grd.addColorStop(0, s.c1); grd.addColorStop(1, s.c2);
+      ctx.fillStyle = grd;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fill();
+    });
+
+    // right fade
+    const rightFade = ctx.createLinearGradient(W*0.4, 0, W, 0);
+    rightFade.addColorStop(0, 'rgba(5,5,8,0.6)');
+    rightFade.addColorStop(0.5, 'rgba(5,5,8,0.2)');
+    rightFade.addColorStop(1, 'transparent');
+    ctx.fillStyle = rightFade; ctx.fillRect(0, 0, W, H);
+
+    // left solid
+    const leftFade = ctx.createLinearGradient(0, 0, W*0.55, 0);
+    leftFade.addColorStop(0, 'rgba(5,5,8,0.95)');
+    leftFade.addColorStop(0.7, 'rgba(5,5,8,0.5)');
+    leftFade.addColorStop(1, 'transparent');
+    ctx.fillStyle = leftFade; ctx.fillRect(0, 0, W, H);
+
+    const vig = ctx.createRadialGradient(W*0.5, H*0.5, H*0.2, W*0.5, H*0.5, H*0.85);
+    vig.addColorStop(0, 'transparent');
+    vig.addColorStop(1, 'rgba(5,5,8,0.6)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── Scroll Reveal ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
